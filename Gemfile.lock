@@ -325,6 +325,7 @@ DEPENDENCIES
   hanami-view (~> 2.2)
   hanami-webconsole (~> 2.2)
   pg
+  pry
   puma
   rack-test
   rake
