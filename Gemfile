@@ -40,4 +40,5 @@ group :test do
   # Web integration
   gem "capybara"
   gem "rack-test"
+  gem "faker", "~> 2.23"
 end
