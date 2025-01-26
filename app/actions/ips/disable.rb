@@ -11,10 +11,9 @@ module IpMonitoring
         end
 
         def handle(request, response)
-          halt 422, { errors: request.params.errors }.to_json unless request.params.valid?
+          check_params(request)
 
-          ip = ip_repo.get!(request.params[:id])
-          updated_ip = ip_repo.update(ip.id, enabled: false, updated_at: Time.now)
+          updated_ip = ip_repo.update(find_ip_by_id(request.params[:id]).id, enabled: false, updated_at: Time.now)
 
           response.format = :json
           response.body = updated_ip.to_h.to_json

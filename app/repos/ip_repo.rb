@@ -12,6 +12,10 @@ module IpMonitoring
       def find_by_ip(ip)
         ips.where(ip: ip).one
       end
+
+      def enabled_ips
+        ips.where(enabled: true).to_a
+      end
     end
   end
 end

@@ -15,13 +15,15 @@ gem "dry-operation"
 gem "puma"
 gem "rake"
 gem "pg"
+gem "net-ping"
+gem 'rufus-scheduler'
+gem "puma-rufus-scheduler"
 
 group :development do
   gem "hanami-webconsole", "~> 2.2"
 end
 
 group :development, :test do
-  gem "pry"
   gem "dotenv"
 end
 

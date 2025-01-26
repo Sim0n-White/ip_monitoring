@@ -11,12 +11,10 @@ module IpMonitoring
         end
 
         def handle(request, response)
-          halt 422, { errors: request.params.errors }.to_json unless request.params.valid?
+          check_params(request)
 
-          ip = ip_repo.get!(request.params[:id])
-          ip_repo.delete(ip.id)
+          ip_repo.delete(find_ip_by_id(request.params[:id]).id)
 
-          response.status = 200
           response.format = :json
           response.body = { message: "IP address deleted successfully" }.to_json
         end
