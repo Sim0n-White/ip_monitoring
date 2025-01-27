@@ -1,0 +1,30 @@
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "2300:2300"
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/ip_monitoring_development
+    depends_on:
+      - db
+    command: >
+      sh -c "bundle exec hanami db create &&
+             bundle exec hanami db migrate &&
+             bundle exec hanami server --host 0.0.0.0"
+    volumes:
+      - .:/app
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ip_monitoring_development
+    ports:
+      - "5434:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
