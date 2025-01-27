@@ -4,16 +4,14 @@ services:
       context: .
     ports:
       - "2300:2300"
+    networks:
+      - ip_monitoring_net
     environment:
       DATABASE_URL: postgres://postgres:password@db:5432/ip_monitoring_development
     depends_on:
       - db
-    command: >
-      sh -c "bundle exec hanami db create &&
-             bundle exec hanami db migrate &&
-             bundle exec hanami server --host 0.0.0.0"
-    volumes:
-      - .:/app
+    cap_add:
+      - NET_RAW
 
   db:
     image: postgres:15
@@ -21,10 +19,17 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: ip_monitoring_development
+    networks:
+      - ip_monitoring_net
     ports:
       - "5434:5432"
-    volumes:
-      - db_data:/var/lib/postgresql/data
 
-volumes:
-  db_data:
+networks:
+  ip_monitoring_net:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.1.0/24
+        - subnet: "fd00::/64"

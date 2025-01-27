@@ -16,7 +16,7 @@ gem "puma"
 gem "rake"
 gem "pg"
 gem "net-ping"
-gem 'rufus-scheduler'
+gem "rufus-scheduler"
 gem "puma-rufus-scheduler"
 
 group :development do
